@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+    div.container-fluid.p-0
+        h1.h3.mb-3 Add a Student
+        .row
+            .col-12.col-xl-12
+                .card
+                    .card-body
+                        form(action="/create-student" method="POST")
+                            .mb-3
+                                label.form-label First Name
+                                input.form-control(type="text" name='F_name')
+                            .mb-3
+                                label.form-label Last Name
+                                input.form-control(type="text" name='L_name')
+                            .mb-3
+                                label.form-label Class
+                                input.form-control(type="text" name='Class')
+                            .mb-3
+                            button.btn.btn-primary(type="submit") Submit

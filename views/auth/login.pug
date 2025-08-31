@@ -1,0 +1,30 @@
+extends auth_layout
+
+block content
+    .container
+        .row.justify-content-center
+            .col-md-6.col-lg-6
+                .text-center.mt-4
+                    h1.h2 LEARNIT 
+
+                form
+                    .mb-3
+                        label.form-label Email
+                        input.form-control.form-control-lg(type='email' name='email' placeholder='Enter your email')
+
+                    .mb-3
+                        label.form-label Password
+                        input.form-control.form-control-lg(type='password' name='password' placeholder='Enter your password')
+                        small
+                            a(href='/pages-reset-password') Forgot password?
+
+                    .form-check.align-items-center
+                        input#customControlInline.form-check-input(type='checkbox' name='remember-me' value='remember-me', checked)
+                        label.form-check-label.text-small(for='customControlInline') Remember me
+
+                    .d-grid.gap-2.mt-3
+                        a.btn.btn-lg.btn-primary(href='/') Sign in
+                        .div.text-center.mb-3
+                        | Don't have an account?
+                        a(href='http://localhost:4000/register') Sign Up
+

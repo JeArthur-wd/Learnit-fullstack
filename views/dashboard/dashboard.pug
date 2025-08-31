@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1 Welcome to Your Dashboard
+    if user
+        p Hello, #{user.FName} #{user.LName}!
+        p Email: #{user.Email}
+        p User ID: #{user.user_ID}
+    else
+        p You are not authenticated. Please <a href="/users/login">log in</a>.
+    a(href='/logout') Log Out

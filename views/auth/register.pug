@@ -1,0 +1,32 @@
+extends auth_layout
+
+block content
+    .container
+        .row.justify-content-center
+            .col-md-6.col-lg-6
+                .text-center.mt-4
+                    h1.h2 LEARNIT 
+
+                form
+                    .mb-3
+                        label.form-label Full Name
+                        input.form-control.form-control-lg(type='text' name='full-name' placeholder='Enter your full name')
+
+                    .mb-3
+                        label.form-label Email
+                        input.form-control.form-control-lg(type='email' name='email' placeholder='Enter your email')
+                    .mb-3
+                        label.form-label Password
+                        input.form-control.form-control-lg(type='password' name='password' placeholder='Enter your password')
+
+                    .mb-3
+                        label.form-label Confirm password
+                        input.form-control.form-control-lg(type='password' name='password' placeholder='confirm password')
+
+                    .d-grid.gap-2.mt-3 
+                        a.btn.btn-lg.btn-primary(href='/') Sign up
+                        .div.text-center.mb-3
+                        | Already have account? 
+                        a(href='http://localhost:4000/') Log In
+
+
