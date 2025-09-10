@@ -1,32 +1,33 @@
 extends auth_layout
 
 block content
-    .container
-        .row.justify-content-center
-            .col-md-6.col-lg-6
-                .text-center.mt-4
-                    h1.h2 LEARNIT 
+  .text-center.mt-4
+    h1.h2 LEARNIT
+    p.lead Sign up for your account
 
-                form
-                    .mb-3
-                        label.form-label Full Name
-                        input.form-control.form-control-lg(type='text' name='full-name' placeholder='Enter your full name')
+  .card
+    .card-body
+      .m-sm-3
+        form(action="/signup" method="POST")
+          .mb-3
+            label.form-label Full name
+            input.form-control.form-control-lg(type="text", name="name", placeholder="Enter your name")
+          
+          .mb-3
+            label.form-label Email
+            input.form-control.form-control-lg(type="email", name="email", placeholder="Enter your email")
+          
+          .mb-3
+            label.form-label Password
+            input.form-control.form-control-lg(type="password", name="password", placeholder="Enter password")
+          
+          .mb-3
+            label.form-label Confirm Password
+            input.form-control.form-control-lg(type="password", name="confirmPassword", placeholder="Confirm password")
+          
+          .d-grid.gap-2.mt-3
+            button.btn.btn-lg.btn-primary(type="submit") Sign up
 
-                    .mb-3
-                        label.form-label Email
-                        input.form-control.form-control-lg(type='email' name='email' placeholder='Enter your email')
-                    .mb-3
-                        label.form-label Password
-                        input.form-control.form-control-lg(type='password' name='password' placeholder='Enter your password')
-
-                    .mb-3
-                        label.form-label Confirm password
-                        input.form-control.form-control-lg(type='password' name='password' placeholder='confirm password')
-
-                    .d-grid.gap-2.mt-3 
-                        a.btn.btn-lg.btn-primary(href='/') Sign up
-                        .div.text-center.mb-3
-                        | Already have account? 
-                        a(href='http://localhost:4000/') Log In
-
-
+  .text-center.mb-3
+    | Already have an account? 
+    a(href='http://localhost:4000/') Log In

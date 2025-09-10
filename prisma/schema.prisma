@@ -46,7 +46,7 @@ model user {
   user_ID      Int      @id @default(autoincrement())
   FName        String   @db.VarChar(50)
   LName        String   @db.VarChar(50)
-  Email        String   @db.VarChar(50)
+  Email        String   @db.VarChar(50)    @unique
   Password     String   @db.VarChar(200)
   CreationDate DateTime @default(now()) @db.Timestamp(0)
 }
