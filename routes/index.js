@@ -1,34 +1,24 @@
 import express from 'express';
 import studentRoutes from './studentRoutes.js';
 import authRoutes from './authRoutes.js';
-import users from './users.js';
-
+import subjectRoutes from './subjectRoutes.js';
 
 const router = express.Router();
 
-// Define the base route for the application
+// Use auth routes
 router.use('/', authRoutes);
-// router.use('/grades', gradeRoutes);
-// router.use('/users', userRoutes);
-// router.use('/students', studentRoutes);
-// router.use('/subjects', subjectRoutes);
-// router.use('/terms', termRoutes);
 
 // Define the base route for student-related operations
 router.use('/', studentRoutes);
-
+router.use('/', subjectRoutes);
 // Dashboard route
 router.get('/dashboard', (req, res) => {
-    res.render('dashboard', { user: req.user }); // Pass the decoded user data
+    res.render('dashboard', { user: req.user });
 });
 
-// Logout route
-router.get('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.redirect('/dashboard');
-});
-
+// Home route
 router.get('/', (req, res) => {
-    res.send('Welcome to the Learnit Fullstack Application');
+    res.redirect('/login'); // Redirect to login instead of welcome message
 });
+
 export default router;

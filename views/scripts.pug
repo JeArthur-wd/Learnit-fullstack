@@ -339,3 +339,32 @@ script.
         }, 15000);
     });
 
+script(src='https://cdn.jsdelivr.net/npm/toastify-js')
+script.
+    // Function to show toast
+    function showToast(message, type = 'info') {
+        const backgroundColor = {
+            success: '#4caf50',
+            error: '#f44336',
+            warning: '#ff9800',
+            info: '#2196f3'
+        }[type];
+
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: backgroundColor,
+            stopOnFocus: true
+        }).showToast();
+    }
+
+    // Show flash messages on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const messages = !{JSON.stringify(messages)};
+
+        Object.entries(messages).forEach(([type, msgs]) => {
+            msgs.forEach(msg => showToast(msg, type));
+        });
+    });

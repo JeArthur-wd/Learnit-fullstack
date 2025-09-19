@@ -94,8 +94,9 @@ nav.navbar.navbar-expand.navbar-light.navbar-bg
                     i.align-middle(data-feather='settings')
 
                 a.nav-link.dropdown-toggle.d-none.d-sm-inline-block(href='#' data-bs-toggle='dropdown')
-                    img.avatar.img-fluid.rounded.me-1(src='img/avatars/avatar.jpg' alt='Charles Hall')
-                    span.text-dark Charles Hall
+                    img.avatar.img-fluid.rounded.me-1(src='/img/avatars/avatar.jpg' alt=user ? user.FName : 'User')
+                    span.text-dark= user ? `${user.FName} ${user.LName}` : 'Guest'
+
 
                 .dropdown-menu.dropdown-menu-end
                     a.dropdown-item(href='pages-profile.html')
@@ -112,4 +113,7 @@ nav.navbar.navbar-expand.navbar-light.navbar-bg
                         i.align-middle.me-1(data-feather='help-circle')
                         | Help Center
                     .dropdown-divider
-                    a.dropdown-item(href='#') Log out
+                    a.dropdown-item(href='/logout')
+                      i.align-middle.me-1(data-feather='log-out')
+                      | Log out
+

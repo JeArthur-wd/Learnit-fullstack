@@ -18,10 +18,19 @@ html(lang="en")
     link(rel="stylesheet" href="/css/light.css")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap")
     //- script(src="/js/settings.js")
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css')
+    style.
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
     block styles
 
-
   body
+    .toast-container#toastContainer
+    
     .wrapper
       include nav.pug
 

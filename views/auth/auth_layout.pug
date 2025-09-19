@@ -14,23 +14,63 @@ head
 
     title Sign Up - LEARNIT
 
-    //- link(href="css/app.css" rel="stylesheet")
-    //- link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet")
-
     link(href="/css/app.css" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet")
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css')
+    style.
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
 
 body
+    .toast-container#toastContainer
+
     main.d-flex.w-100
         .container.d-flex.flex-column
             .row.vh-100
                 .col-sm-10.col-md-8.col-lg-6.col-xl-5.mx-auto.d-table.h-100
                     .d-table-cell.align-middle
 
-                        //- .text-center.mt-4
-                        //-     h1.h2 LEARNIT
-                        //- p.lead Start creating the best possible user experience for you customers.
+                        //- FLASH MESSAGES CONTAINER - ADD THIS RIGHT HERE
+                        //- if messages
+                        //-     each type in Object.keys(messages)
+                        //-         each message in messages[type]
+                        //-             .alert.alert-dismissible.fade.show(class=`alert-${type === 'error' ? 'danger' : type}`, role="alert" style="margin-bottom: 20px;")
+                        //-                 | #{message}
+                        //-                 button.btn-close(type="button" data-bs-dismiss="alert" aria-label="Close")
 
                         block content
 
     script(src="js/app.js")
+    script(src='https://cdn.jsdelivr.net/npm/toastify-js')
+    script.
+        // Function to show toast
+        function showToast(message, type = 'info') {
+            const backgroundColor = {
+                success: '#4caf50',
+                error: '#f44336',
+                warning: '#ff9800',
+                info: '#2196f3'
+            }[type];
+
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: backgroundColor,
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        // Show flash messages on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = !{JSON.stringify(messages)};
+
+            Object.entries(messages).forEach(([type, msgs]) => {
+                msgs.forEach(msg => showToast(msg, type));
+            });
+        });
