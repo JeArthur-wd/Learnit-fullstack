@@ -1,26 +1,20 @@
 extends ../layout
 
 block content
-  .container-fluid.p-4
-    .row
-      .col-md-12
-        .card
-          .card-header
-            h5.card-title.mb-0 Add New Subject
-          .card-body
-            form(action="/subjects" method="POST")
-              .row.mb-3
-                .col-md-6
-                  label.form-label(for="subjectName") Subject Name
-                  input.form-control(
-                    type="text", 
-                    id="subjectName", 
-                    name="subjectName", 
-                    placeholder="Enter subject name",
-                    required
-                  )
-              
-              .row
-                .col-md-12
-                  button.btn.btn-primary.me-2(type="submit") Save Subject
-                  a.btn.btn-secondary(href="/subjects") Cancel
+    div.container-fluid.p-0
+        h1.h3.mb-3 Add New Subject
+        .row
+            .col-12.col-xl-12
+                .card
+                    .card-body
+                        form(action="/add-subject" method="POST")
+                            .mb-3
+                                label.form-label Subject Name
+                                input.form-control(
+                                    type="text", 
+                                    name="subjectName", 
+                                    placeholder="Enter subject name"
+                                )
+                            .mb-3
+                            button.btn.btn-primary.me-2(type="submit") Submit
+                            //- a.btn.btn-secondary(href="/subjects") Cancel

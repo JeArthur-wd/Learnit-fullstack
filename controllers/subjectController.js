@@ -1,8 +1,6 @@
 import { prisma } from './../utilities/prisma.js';
 
-// =====================
 // Render Add Subject Page
-// =====================
 export const showAddSubject = (req, res) => {
     res.render('Subject/addSubject');
 };
@@ -10,53 +8,51 @@ export const showAddSubject = (req, res) => {
 // Create Subject
 export const createSubject = async (req, res) => {
     try {
-        const { Name } = req.body;
-        console.log(req.body);
+        const { subjectName } = req.body; // CHANGED: Now expecting subjectName
+        console.log('Request body:', req.body);
 
         // Validate required field
-        if (!Name) {
-            return res.render('Subject/addSubject', {
-                message: 'Subject name is required',
-                status: 'error',
-            });
+        if (!subjectName) {
+            req.flash('error', 'Subject name is required');
+            return res.redirect('/add-subject');
         }
 
-        await prisma.subject.create({
+        // Create the subject
+        const newSubject = await prisma.subject.create({
             data: {
-                Name,
-                // User_ID: req.user.user_ID, // if you attach user from auth
-                User_ID: 18, // temp hardcoded, replace with real logged-in user later
+                Name: subjectName, // CHANGED: Use subjectName from form
+                User_ID: 18, // temp hardcoded
             },
         });
 
-        res.redirect('/subject-list', 201, {
-            message: 'Subject created successfully',
-            status: 'success',
-        });
+        console.log('Subject created successfully:', newSubject);
+        
+        req.flash('success', 'Subject created successfully');
+        res.redirect('/subject-list');
+        
     } catch (error) {
-        console.error(`Error creating subject: ${error.message}`);
-        res.render('Subject/addSubject', {
-            message: 'An error occurred while creating the subject. Please try again.',
-            status: 'error',
-        });
+        console.error('Error creating subject:', error);
+        req.flash('error', 'An error occurred while creating the subject. Please try again.');
+        res.redirect('/add-subject');
     }
 };
 
-// List Subjects
+// List Subjects (keep this the same)
 export const showSubjectList = async (req, res) => {
     try {
         const subjects = await prisma.subject.findMany({
             orderBy: {
-                Subject_ID: 'desc', // newest first
+                Subject_ID: 'desc',
             },
         });
 
-        res.render('Subject/subjectList', { subjects });
-    } catch (error) {
-        console.error(`Error fetching subject list: ${error.message}`);
-        res.render('Subject/subjectList', {
-            message: 'An error occurred while fetching the subject list. Please try again.',
-            status: 'error',
+        res.render('Subject/subjectList', { 
+            subjects,
+            messages: req.flash() 
         });
+    } catch (error) {
+        console.error('Error fetching subject list:', error);
+        req.flash('error', 'An error occurred while fetching the subject list.');
+        res.redirect('/subject-list');
     }
 };

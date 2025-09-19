@@ -1,27 +1,31 @@
 extends ../layout
 
 block content 
-    .container.mt-5 
-      h2  Subject List
-
-      if message 
-        .alert (class = status === 'success' ? 'alert-success' : 'alert-danger')
-          | #{message}
-          
- a.btn.btn-success.mb-3(href="/add-subject") + Add New Subject
-
-    if subjects && subjects.length
-      table.table.table-striped
-        thead
-          tr
-            th #ID
-            th Name
-            th User ID
-        tbody
-          each subject in subjects
-            tr
-              td #{subject.Subject_ID}
-              td #{subject.Name}
-              td #{subject.User_ID}
-    else
-      p.text-muted No subjects found.
+    div.container-fluid.p-0
+        h1.h3.mb-3 Subject List
+        
+        if message 
+            .alert(class= status === 'success' ? 'alert-success' : 'alert-danger')
+                | #{message}
+        
+        .row
+            .col-12.col-xl-12
+                .card
+                    .card-body
+                        a.btn.btn-success.mb-3(href="/add-subject") + Add New Subject
+                        
+                        if subjects && subjects.length
+                            table.table.table-striped
+                                thead
+                                    tr
+                                        th #ID
+                                        th Name
+                                        th User ID
+                                tbody
+                                    each subject in subjects
+                                        tr
+                                            td #{subject.Subject_ID}
+                                            td #{subject.Name}
+                                            td #{subject.User_ID}
+                        else
+                            p.text-muted No subjects found.
