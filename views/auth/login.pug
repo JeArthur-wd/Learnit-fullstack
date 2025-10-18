@@ -11,15 +11,25 @@ block content
         form(action="/signin" method="POST")
           .mb-3
             label.form-label Email
-            input.form-control.form-control-lg(type="email", name="email", placeholder="Enter your email")
+            input.form-control.form-control-lg(
+              type="email", 
+              name="email",  
+              placeholder="Enter your email"
+              required
+            )
 
           .mb-3
             label.form-label Password
-            input.form-control.form-control-lg(type="password", name="password", placeholder="Enter password")
+            input.form-control.form-control-lg(
+              type="password", 
+              name="password", 
+              placeholder="Enter password"
+              required
+            )
 
           .d-grid.gap-2.mt-3
             button.btn.btn-lg.btn-primary(type="submit") Sign In
 
   .text-center.mb-3
-    | Don’t have an account? 
-    a(href='http://localhost:4000/register/') Sign Up
+    | Don't have an account? 
+    a(href='/register') Sign Up 

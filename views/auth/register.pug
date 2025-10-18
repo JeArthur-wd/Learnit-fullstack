@@ -10,16 +10,20 @@ block content
       .m-sm-3
         form(action="/signup" method="POST")
           .mb-3
-            label.form-label Full name
-            input.form-control.form-control-lg(type="text", name="name", placeholder="Enter your name")
+            label.form-label First name
+            input.form-control.form-control-lg(type="text", name="FName", placeholder="Enter your name")
+
+            .mb-3
+            label.form-label Last name
+            input.form-control.form-control-lg(type="text", name="LName", placeholder="Enter your name")
           
           .mb-3
             label.form-label Email
-            input.form-control.form-control-lg(type="email", name="email", placeholder="Enter your email")
+            input.form-control.form-control-lg(type="email", name="Email", placeholder="Enter your email")
           
           .mb-3
             label.form-label Password
-            input.form-control.form-control-lg(type="password", name="password", placeholder="Enter password")
+            input.form-control.form-control-lg(type="password", name="Password", placeholder="Enter password")
           
           .mb-3
             label.form-label Confirm Password
