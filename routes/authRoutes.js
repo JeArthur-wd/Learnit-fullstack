@@ -1,35 +1,23 @@
-// import express from 'express';
-// // import { showLoginPage, showRegisterPage } from '../controllers/authController.js';
-// import { login, showRegisterPage, signup } from '../controllers/userController.js';
-
-
-// const router = express.Router();
-
-// // Define the base route for the application
-// router.get('/', login);
-// router.get('/login', login);
-// router.get('/logout', (req, res) => {
-//     // Handle logout logic here
-//     // clear session or token, etc.
-//     res.redirect('/');
-// });
-// router.get('/register', showRegisterPage);
-// router.post('/signup', signup);
-// router.post('/signin', login);
-
-// export default router;
-
 import express from 'express';
-import { login, showRegisterPage, signup, logout } from '../controllers/userController.js';
+import { login, showRegisterPage, signup, logout, showLoginPage } from '../controllers/authController.js';
+import { validateSignup, validateLogin } from '../middleware/validators.js';
+import { checkAuth } from '../middleware/auth.js';
+// Import user-related controllers if needed
+// import { getUser } from '../controllers/userController.js';
 
 const router = express.Router();
 
-// Define the base route for the application
+// Base route
 router.get('/', (req, res) => res.redirect('/login'));
-router.get('/login', (req, res) => res.render('auth/login'));
-router.get('/logout', logout);
+
+// Auth routes
+router.get('/login', showLoginPage);
 router.get('/register', showRegisterPage);
-router.post('/signup', signup);
-router.post('/signin', login);
+router.post('/signup', validateSignup, signup);
+router.post('/signin', validateLogin, login);
+router.get('/logout', logout);
+
+// Example user route (uncomment if you have getUser)
+// router.get('/:user_ID', checkAuth, getUser);
 
 export default router;
