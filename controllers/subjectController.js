@@ -9,7 +9,7 @@ export const showAddSubject = (req, res) => {
 export const createSubject = async (req, res) => {
     try {
         const { subjectName } = req.body; // CHANGED: Now expecting subjectName
-        console.log('Request body:', req.body);
+        const userId = req.user.user_ID; // Assuming user ID is available in req.user
 
         // Validate required field
         if (!subjectName) {
@@ -21,7 +21,7 @@ export const createSubject = async (req, res) => {
         const newSubject = await prisma.subject.create({
             data: {
                 Name: subjectName, // CHANGED: Use subjectName from form
-                User_ID: 18, // temp hardcoded
+                User_ID: userId, // temp hardcoded
             },
         });
 

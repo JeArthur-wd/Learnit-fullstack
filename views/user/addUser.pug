@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+  .container.mt-5
+    .card.shadow-sm 
+      .card-body
+        h2.mb-4 Add User
+        
+        if messages.error
+            .alert.alert-danger= messages.error
+        if messages.success
+            .alert.alert-success= messages.success
+
+        form(action="/add-user" method="POST")
+            .mb-3
+                label.form-label First Name
+                input.form-control(type="text" name="FName" required)
+
+            .mb-3
+                label.form-label Last Name
+                input.form-control(type="text" name="LName" required)
+            
+            .mb-3
+                label.form-label Email
+                input.form-control(type="email" name="email" required)
+            
+            .mb-3
+                label.form-label Password
+                input.form-control(type="password" name="password" required)
+            
+            .mb-3
+                label.form-label Confirm Password
+                input.form-control(type="password" name="confirmPassword" required)
+            
+            button.btn.btn-primary(type="submit") Create User

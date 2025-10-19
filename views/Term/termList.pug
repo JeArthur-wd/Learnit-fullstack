@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  .container.mt-5
+    .card.shadow-sm
+      .card-body
+        h3.mb-4 Term List
+
+        if status == 'error'
+          .alert.alert-danger #{message}
+        if status == 'success'
+          .alert.alert-success #{message}
+
+        if terms.length
+          table.table.table-hover
+            thead.table-light
+              tr
+                th ID
+                th Name
+                th Start Date
+                th End Date
+            tbody
+              each term in terms
+                tr
+                  td #{term.Term_ID}
+                  td #{term.Name}
+                  td #{term.Start_Date.toDateString()}
+                  td #{term.End_Date.toDateString()}
+        else
+          p.text-muted No terms found.
+
+        a.btn.btn-primary.mt-3(href="/add-term") Add New Term

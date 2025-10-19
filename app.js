@@ -44,6 +44,7 @@ app.use(flash());
 app.use('/', authRoutes);
 app.use('/', indexRouter);
 
+
 // Make flash messages available to all templates - MUST COME AFTER ROUTES!
 app.use((req, res, next) => {
   res.locals.messages = req.flash();

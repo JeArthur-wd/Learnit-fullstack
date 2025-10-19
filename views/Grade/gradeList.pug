@@ -1,0 +1,61 @@
+extends ../layout.pug
+
+block content
+  .container.mt-5
+    .d-flex.justify-content-between.align-items-center.mb-4
+      h2.mb-0 Grade List
+      a.btn.btn-primary(href="/add-grade") 
+        i.bi.bi-plus-circle
+        | Add New Grade
+
+    if message
+      .alert(class=status === 'error' ? 'alert-danger' : 'alert-success') #{message}
+
+    .card
+      .card-body
+        if grades.length
+          .table-responsive
+            table.table.table-striped.table-hover
+              thead.table-dark
+                tr
+                  th ID
+                  th Student
+                  th Subject
+                  th Term
+                  th Marks
+                  th Grade
+                  th Actions
+              tbody
+                each grade in grades
+                  tr
+                    td #{grade.ID}
+                    td
+                      if grade.student
+                        | #{grade.student.F_name} #{grade.student.L_name}
+                      else
+                        span.text-muted N/A
+                    td
+                      if grade.subject
+                        | #{grade.subject.Name}
+                      else
+                        span.text-muted N/A
+                    td
+                      if grade.term
+                        | #{grade.term.Name}
+                      else
+                        span.text-muted N/A
+                    td #{grade.Marks}
+                    td 
+                      span.badge.bg-success #{grade.Grade}
+                    td
+                      .btn-group(role="group")
+                        button.btn.btn-sm.btn-outline-primary(type="button")
+                          i.bi.bi-pencil
+                        button.btn.btn-sm.btn-outline-danger(type="button")
+                          i.bi.bi-trash
+        else
+          .text-center.py-5
+            i.bi.bi-journal-x.display-1.text-muted
+            h4.text-muted.mt-3 No Grades Found
+            p.text-muted There are no grades in the system yet.
+            a.btn.btn-primary(href="/add-grade") Add Your First Grade

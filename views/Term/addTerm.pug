@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  .container.mt-5
+    .card.shadow-sm
+      .card-body
+        h3.mb-4 Add New Term
+
+        if status == 'error'
+          .alert.alert-danger #{message}
+        if status == 'success'
+          .alert.alert-success #{message}
+
+        form(action="/add-term" method="POST")
+          .mb-3
+            label.form-label(for="Name") Term Name
+            input.form-control(type="text" name="Name" placeholder="Enter term name" required)
+
+          .mb-3
+            label.form-label(for="Start_Date") Start Date
+            input.form-control(type="date" name="Start_Date" required)
+
+          .mb-3
+            label.form-label(for="End_Date") End Date
+            input.form-control(type="date" name="End_Date" required)
+
+          button.btn.btn-primary(type="submit") Submit

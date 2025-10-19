@@ -1,0 +1,54 @@
+extends ../layout.pug
+
+block content
+  .container.mt-5
+    h2.mb-4 Add New Grade
+
+    //- Add flash message support
+    if messages && messages.error
+      .alert.alert-danger
+        each error in messages.error
+          span #{error}
+    if messages && messages.success
+      .alert.alert-success
+        each success in messages.success
+          span #{success}
+
+    //- Also handle query parameters as fallback
+    if message && status
+      .alert(class=status === 'error' ? 'alert-danger' : 'alert-success') #{message}
+
+    .card
+      .card-body
+        form(method="POST" action="/add-grade")
+          .mb-3
+            label.form-label(for="Student_ID") Select Student
+            select.form-control(name="Student_ID" required)
+              option(value="") -- Select Student --
+              each student in students
+                option(value=student.Student_ID) #{student.F_name} #{student.L_name}
+
+          .mb-3
+            label.form-label(for="Subject_ID") Select Subject
+            select.form-control(name="Subject_ID" required)
+              option(value="") -- Select Subject --
+              each subject in subjects
+                option(value=subject.Subject_ID) #{subject.Name}
+
+          .mb-3
+            label.form-label(for="Term_ID") Select Term
+            select.form-control(name="Term_ID" required)
+              option(value="") -- Select Term --
+              each term in terms
+                option(value=term.Term_ID) #{term.Name}
+
+          .mb-3
+            label.form-label(for="Marks") Marks
+            input.form-control(type="text" name="Marks" placeholder="Enter marks" required)
+
+          .mb-3
+            label.form-label(for="Grade") Grade
+            input.form-control(type="text" name="Grade" placeholder="Enter grade" required)
+
+          button.btn.btn-primary(type="submit") Submit
+          //- a.btn.btn-secondary.ml-2(href="/grade-list") Cancel

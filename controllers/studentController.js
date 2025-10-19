@@ -7,6 +7,7 @@ export const showAddStudent = (req, res) => {
 export const CreateStudent = async (req, res) => {
     try {
         const { F_name, L_name, Class } = req.body;
+        const userId = req.user.user_ID;
         console.log(req.body)
 
         // Validate required fields
@@ -24,7 +25,7 @@ export const CreateStudent = async (req, res) => {
                 L_name,
                 Class,
                 // User_ID: req.user.user_ID, // Set User_ID to the authenticated user's ID
-                User_ID: 18,
+                User_ID: userId,
             },
         });
 
@@ -56,4 +57,61 @@ export const showStudentList = async (req, res) => {
             status: 'error',
         });
     }
-}
+};
+
+export const showEditStudent = async (req, res) =>{
+    try {
+        const studentId = parseInt(req.params.Id);
+        const student = await prisma.student.findUnique({
+            where: { Student_ID: studentId },
+        });
+
+        if (!student) {
+            return res.status(404).render('Student/studentList', {
+                message: 'Student not Found.',
+                status: 'error',
+            });
+        }
+
+        res.render('Student/editStudent', { student });
+    } catch (error) {
+        console.error('Error loading student edit form: ${error.message}');
+        res.render('Student/studentList', {
+            message: 'An error occurred while loading the edit form. Please try again.',
+            status: 'error',
+        });
+    }
+};
+
+// form submission for update student
+export const updateStudent = async (req, res) => {
+    try {
+        const studentId = parseInt(req.params.Id);
+        const { F_name, L_name, CLass } = req.body;
+
+        if (!F_name || !L_name || !Class) {
+            return req.render('Student/editStudent', {
+                message: 'All fields are required.',
+                status: 'error',
+                student: { Student_ID: studentId, F_name, L_name, CLass },
+            });
+        }
+
+        await prisma.student.update({
+            where: { Student_ID: studentId },
+            data: { F_name, L_name, Class },
+        });
+
+        res.redirect('/student-list');
+    } catch (error) {
+        console.error('error updating student: ${error.message}');
+        res.render('Student/editStudent', {
+            message: 'An error occurred while updating the student.',
+            status: 'error',
+        });
+    }
+
+
+    };
+
+    
