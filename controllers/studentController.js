@@ -59,9 +59,9 @@ export const showStudentList = async (req, res) => {
     }
 };
 
-export const showEditStudent = async (req, res) =>{
+export const showEditStudent = async (req, res) => {
     try {
-        const studentId = parseInt(req.params.Id);
+        const studentId = parseInt(req.params.id);
         const student = await prisma.student.findUnique({
             where: { Student_ID: studentId },
         });
@@ -86,14 +86,16 @@ export const showEditStudent = async (req, res) =>{
 // form submission for update student
 export const updateStudent = async (req, res) => {
     try {
-        const studentId = parseInt(req.params.Id);
-        const { F_name, L_name, CLass } = req.body;
+        console.log("we are here")
+        const studentId = parseInt(req.params.id);
+        const { F_name, L_name, Class } = req.body;
 
         if (!F_name || !L_name || !Class) {
-            return req.render('Student/editStudent', {
+             req.flash('error', 'All fields are required.');
+            return res.render('Student/editStudent', {
                 message: 'All fields are required.',
                 status: 'error',
-                student: { Student_ID: studentId, F_name, L_name, CLass },
+                student: { Student_ID: studentId, F_name, L_name, Class },
             });
         }
 
@@ -101,10 +103,11 @@ export const updateStudent = async (req, res) => {
             where: { Student_ID: studentId },
             data: { F_name, L_name, Class },
         });
-
+        req.flash('success', 'Student updated successfully!');
         res.redirect('/student-list');
     } catch (error) {
-        console.error('error updating student: ${error.message}');
+        console.log(`error updating student: ${error.message}`);
+        req.flash('error', 'An error occurred while updating the student.');
         res.render('Student/editStudent', {
             message: 'An error occurred while updating the student.',
             status: 'error',
@@ -112,6 +115,5 @@ export const updateStudent = async (req, res) => {
     }
 
 
-    };
+};
 
-    

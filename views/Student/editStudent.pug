@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+    div.container-fluid.p-0
+        h1.h3.mb-3 Edit Student
+        .row
+            .col-12.col-xl-12   
+                .card
+                    .card-body
+                        form(action=`/edit-student/${student.Student_ID}`, method="POST")
+                            .mb-3
+                                label.form-label First Name
+                                input.form-control(
+                                    type="text" 
+                                    name='F_name'
+                                    value=student.F_name)
+                            .mb-3
+                                label.form-label Last Name
+                                input.form-control(
+                                    type="text" 
+                                    name='L_name'
+                                    value=student.L_name)
+                            .mb-3
+                                label.form-label Class
+                                input.form-control(
+                                    type="text" 
+                                    name='Class'
+                                    value=student.Class)
+                            .mb-3
+                            button.btn.btn-primary(type="submit") Update
