@@ -1,18 +1,16 @@
 extends ../layout
 
 block content
-    div.container-fluid.p-0
-        h1.h3.mb-3 User List
+    .container-fluid.p-0
+        .d-flex.justify-content-between.align-items-center.mb-4
+            h1.h3.mb-0 User List
+            a.btn.btn-primary(href="/add-user") 
+                i.bi.bi-plus-circle
+                |  Add New User
+
         .row
             .col-12
                 .card
-                    .card-header
-                        .d-flex.justify-content-between.align-items-center
-                            h5.card-title.mb-0 All Users
-                            a.btn.btn-primary(href="/add-user") 
-                                i.align-middle(data-feather="plus")
-                                |  Add New User
-                    
                     .card-body
                         if messages.error
                             .alert.alert-danger.alert-dismissible.fade.show(role="alert")
@@ -43,14 +41,15 @@ block content
                                                 td #{user.LName}
                                                 td #{user.Email}
                                                 td #{new Date(user.CreationDate).toLocaleDateString()}
-                                                td
-                                                    .btn-group
-                                                        button.btn.btn-sm.btn-outline-primary(type="button") View
-                                                        button.btn.btn-sm.btn-outline-warning(type="button") Edit
-                                                        button.btn.btn-sm.btn-outline-danger(type="button") Delete
+                                                td.table-action
+                                                    a(href=`/edit-user/${user.user_ID}`)
+                                                        i.align-middle(data-feather="edit-2")
+                                                    // Delete modal trigger
+                                                    a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${user.user_ID}`)
+                                                        i.align-middle(data-feather="trash")
                         else
                             .text-center.py-4
                                 p.text-muted No users found.
-                                a.btn.btn-primary(href="/add-user") Add First User
-
-
+                                a.btn.btn-primary(href="/add-user") 
+                                    i.bi.bi-plus-circle
+                                    |  Add First User

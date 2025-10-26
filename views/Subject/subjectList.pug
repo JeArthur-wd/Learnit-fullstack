@@ -1,9 +1,13 @@
 extends ../layout
 
-block content 
-    div.container-fluid.p-0
-        h1.h3.mb-3 Subject List
-        
+block content
+    .container-fluid.p-0 
+        .d-flex.justify-content-between.align-items-center.mb-4
+            h1.h3.mb-0 Subject List
+            a.btn.btn-primary(href="/add-subject")
+                i.bi.bi-plus-circle
+                |  Add New Subject
+
         if message 
             .alert(class= status === 'success' ? 'alert-success' : 'alert-danger')
                 | #{message}
@@ -12,8 +16,6 @@ block content
             .col-12.col-xl-12
                 .card
                     .card-body
-                        a.btn.btn-success.mb-3(href="/add-subject") + Add New Subject
-                        
                         if subjects && subjects.length
                             table.table.table-striped
                                 thead
@@ -21,11 +23,17 @@ block content
                                         th #ID
                                         th Name
                                         th User ID
+                                        th Actions
                                 tbody
                                     each subject in subjects
                                         tr
                                             td #{subject.Subject_ID}
                                             td #{subject.Name}
                                             td #{subject.User_ID}
+                                            td.table-action
+                                                a(href=`/edit-subject/${subject.Subject_ID}`)
+                                                    i.align-middle(data-feather="edit-2")
+                                                a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${subject.Subject_ID}`)
+                                                    i.align-middle(data-feather="trash")
                         else
                             p.text-muted No subjects found.

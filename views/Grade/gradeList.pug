@@ -47,12 +47,11 @@ block content
                     td #{grade.Marks}
                     td 
                       span.badge.bg-success #{grade.Grade}
-                    td
-                      .btn-group(role="group")
-                        button.btn.btn-sm.btn-outline-primary(type="button")
-                          i.bi.bi-pencil
-                        button.btn.btn-sm.btn-outline-danger(type="button")
-                          i.bi.bi-trash
+                    td.table-action
+                        a(href=`/edit-grade/${grade.ID}`)
+                            i.align-middle(data-feather="edit-2")
+                        a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${grade.ID}`)
+                            i.align-middle(data-feather="trash")
         else
           .text-center.py-5
             i.bi.bi-journal-x.display-1.text-muted
