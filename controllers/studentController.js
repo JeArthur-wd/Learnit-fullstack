@@ -91,7 +91,7 @@ export const updateStudent = async (req, res) => {
         const { F_name, L_name, Class } = req.body;
 
         if (!F_name || !L_name || !Class) {
-             req.flash('error', 'All fields are required.');
+            req.flash('error', 'All fields are required.');
             return res.render('Student/editStudent', {
                 message: 'All fields are required.',
                 status: 'error',
@@ -113,7 +113,23 @@ export const updateStudent = async (req, res) => {
             status: 'error',
         });
     }
+};
 
+export const deleteStudent = async (req, res) => {
+    try {
+        const studentId = parseInt(req.params.id);
 
+        await prisma.student.delete({
+            where: { Student_ID: studentId },
+        });
+
+        req.flash("success_msg", "Student deleted successfully.");
+        return res.redirect("/student-list");
+
+    } catch (error) {
+        console.error("Error deleting student:", error.message);
+        req.flash("error_msg", "Failed to delete student.");
+        return res.redirect("/student-list");
+    }
 };
 

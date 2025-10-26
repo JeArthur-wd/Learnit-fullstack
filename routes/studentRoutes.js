@@ -3,7 +3,8 @@ import { CreateStudent,
      showAddStudent,
       showStudentList,
     showEditStudent,
-    updateStudent 
+    updateStudent,
+    deleteStudent
 } from '../controllers/studentController.js';
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.post('/create-student', CreateStudent);
 // Edit student
 router.get('/edit-student/:id', showEditStudent);
 router.post('/edit-student/:id', updateStudent);
+// Delete student
+router.post('/delete-student/:id', deleteStudent);
 
 export default router;

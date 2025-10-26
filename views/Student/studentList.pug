@@ -1,15 +1,16 @@
 extends ../layout
 
 block content
-    div.container-fluid.p-0 
-        h1.h3.mb-3 Students List 
+    .container-fluid.p-0 
+        .d-flex.justify-content-between.align-items-center.mb-4
+            h1.h3.mb-0 Students List
+            a.btn.btn-primary(href="/add-student")
+                i.bi.bi-plus-circle
+                |  Add New Student
+
         .row
             .col-12.col-xl-12
-                .div.card
-                    //- .card-header
-                    //-     h5.card-title Contextual Classes
-                    //-     h6.card-subtitle.text-muted Use contextual classes to color table rows or individual cells.
-
+                .card
                     table.table.table-striped
                         thead
                             tr
@@ -28,5 +29,21 @@ block content
                                     td.table-action
                                         a(href=`/edit-student/${student.Student_ID}`)
                                             i.align-middle(data-feather="edit-2")
-                                        a(href=`/delete-student/${student.Student_ID}`)
+                                        // Trigger modal
+                                        a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${student.Student_ID}`)
                                             i.align-middle(data-feather="trash")
+
+        // DELETE CONFIRMATION MODAL (one per student)
+        each student in students
+            .modal.fade(id=`deleteModal-${student.Student_ID}`, tabindex="-1")
+                .modal-dialog
+                    .modal-content
+                        .modal-header
+                            h5.modal-title Delete student?
+                            button.btn-close(type="button", data-bs-dismiss="modal")
+                        .modal-body
+                            p This will delete student.
+                        .modal-footer
+                            button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
+                            form(action=`/delete-student/${student.Student_ID}`, method="POST")
+                                button.btn.btn-danger(type="submit") Delete
