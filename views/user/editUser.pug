@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+    div.container-fluid.p-0
+        h1.h3.mb-3 Edit User
+        .row
+            .col-12.col-xl-12   
+                .card
+                    .card-body
+                        form(action=`/edit-user/${user.user_ID}`, method="POST")
+                            .mb-3
+                                label.form-label First Name
+                                input.form-control(
+                                    type="text" 
+                                    name='FName'
+                                    value=user.FName)
+                            .mb-3
+                                label.form-label Last Name
+                                input.form-control(
+                                    type="text" 
+                                    name='LName'
+                                    value=user.LName)
+                            .mb-3
+                                label.form-label Email
+                                input.form-control(
+                                    type="text" 
+                                    name='Email'
+                                    value=user.Email)
+                            .mb-3
+                            button.btn.btn-primary(type="submit") Update

@@ -44,9 +44,24 @@ block content
                                                 td.table-action
                                                     a(href=`/edit-user/${user.user_ID}`)
                                                         i.align-middle(data-feather="edit-2")
+
                                                     // Delete modal trigger
                                                     a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${user.user_ID}`)
                                                         i.align-middle(data-feather="trash")
+
+                                                    // Delete Confirmation Modal
+                                                    .modal.fade(id=`deleteModal-${user.user_ID}` tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true")
+                                                        .modal-dialog.modal-dialog-centered
+                                                            .modal-content
+                                                                .modal-header
+                                                                    h5.modal-title Delete User?
+                                                                    button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                                                                .modal-body
+                                                                    p This will permanently delete the user.
+                                                                .modal-footer
+                                                                    button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel
+                                                                    form(action=`/delete-user/${user.user_ID}` method="POST")
+                                                                        button.btn.btn-danger(type="submit") Delete
                         else
                             .text-center.py-4
                                 p.text-muted No users found.
