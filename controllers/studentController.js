@@ -28,11 +28,8 @@ export const CreateStudent = async (req, res) => {
                 User_ID: userId,
             },
         });
-
-        res.redirect('/student-list', 201, {
-            message: 'Student created successfully',
-            status: 'success',
-        });
+        req.flash("success", "Student created successfully.");
+        res.redirect('/student-list');
     } catch (error) {
         console.error(`Error creating student: ${error.message}`);
         res.render('Student/addStudent', {
@@ -123,12 +120,12 @@ export const deleteStudent = async (req, res) => {
             where: { Student_ID: studentId },
         });
 
-        req.flash("success_msg", "Student deleted successfully.");
+        req.flash("success", "Student deleted successfully.");
         return res.redirect("/student-list");
 
     } catch (error) {
         console.error("Error deleting student:", error.message);
-        req.flash("error_msg", "Failed to delete student.");
+        req.flash("error", "Failed to delete student.");
         return res.redirect("/student-list");
     }
 };
