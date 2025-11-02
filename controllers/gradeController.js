@@ -91,3 +91,86 @@ export const showGradeList = async (req, res) => {
         });
     }
 };
+
+// Show Edit Grade Form
+export const showEditGrade = async (req, res) => {
+  try {
+    const gradeId = parseInt(req.params.id);
+
+    // Fetch the grade and the lists needed for dropdowns
+    const [grade, students, subjects, terms] = await Promise.all([
+      prisma.grade.findUnique({ where: { ID: gradeId } }),
+      prisma.student.findMany(),
+      prisma.subject.findMany(),
+      prisma.term.findMany(),
+    ]);
+
+    console.log("Grade:", grade);
+    console.log("Students:", students.length);
+    console.log("Subjects:", subjects.length);
+    console.log("Terms:", terms.length);
+
+
+    if (!grade) {
+      req.flash('error', 'Grade not found');
+      return res.redirect('/grade-list');
+    }
+
+    res.render('Grade/editGrade', { grade, students, subjects, terms });
+  } catch (error) {
+    console.error(`Error loading grade edit form: ${error.message}`);
+    req.flash('error', 'Failed to load edit grade form');
+    res.redirect('/grade-list');
+  }
+};
+
+
+// Update Grade
+export const updateGrade = async (req, res) => {
+    try {
+        const gradeId = parseInt(req.params.id);
+        const { Student_ID, Subject_ID, Term_ID, Marks, Grade } = req.body;
+
+        if (!Student_ID || !Subject_ID || !Term_ID || !Marks || !Grade) {
+            req.flash('error', 'All fields are required.');
+            return res.redirect(`/edit-grade/${gradeId}`);
+        }
+
+        await prisma.grade.update({
+            where: { ID: gradeId },
+            data: {
+                Student_ID: parseInt(Student_ID),
+                Subject_ID: parseInt(Subject_ID),
+                Term_ID: parseInt(Term_ID),
+                Marks: Marks.trim(),
+                Grade: Grade.trim().toUpperCase(),
+            },
+        });
+
+        req.flash('success', 'Grade updated successfully!');
+        res.redirect('/grade-list');
+    } catch (error) {
+        console.error(`Error updating grade: ${error.message}`);
+        req.flash('error', 'An error occurred while updating the grade.');
+        res.redirect(`/edit-grade/${req.params.id}`);
+    }
+};
+
+// Delete Grade
+export const deleteGrade = async (req, res) => {
+    try {
+        const gradeId = parseInt(req.params.id);
+
+        await prisma.grade.delete({
+            where: { ID: gradeId },
+        });
+
+        req.flash('success', 'Grade deleted successfully.');
+        return res.redirect('/grade-list');
+
+    } catch (error) {
+        console.error('Error deleting grade:', error.message);
+        req.flash('error', 'Failed to delete grade.');
+        return res.redirect('/grade-list');
+    }
+};
