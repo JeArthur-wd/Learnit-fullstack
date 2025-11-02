@@ -12,12 +12,12 @@ block content
             .col-12
                 .card
                     .card-body
-                        if messages.error
+                        //- if messages.error
                             .alert.alert-danger.alert-dismissible.fade.show(role="alert")
                                 | #{messages.error}
                                 button.btn-close(type="button" data-bs-dismiss="alert" aria-label="Close")
                         
-                        if messages.success
+                        //- if messages.success
                             .alert.alert-success.alert-dismissible.fade.show(role="alert")
                                 | #{messages.success}
                                 button.btn-close(type="button" data-bs-dismiss="alert" aria-label="Close")
