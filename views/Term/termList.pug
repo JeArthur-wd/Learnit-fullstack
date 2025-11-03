@@ -8,46 +8,51 @@ block content
                 i.bi.bi-plus-circle
                 |  Add New Term
 
-        if terms && terms.length
-            table.table.table-hover
-                thead.table-light
-                    tr
-                        th ID
-                        th Name
-                        th Start Date
-                        th End Date
-                        th Actions
-                tbody
-                    each term in terms
-                        tr
-                            td #{term.Term_ID}
-                            td #{term.Name}
-                            td #{term.Start_Date.toDateString()}
-                            td #{term.End_Date.toDateString()}
-                            td.table-action
-                                a(href=`/edit-term/${term.Term_ID}`)
-                                    i.align-middle(data-feather="edit-2")
-                                // Trigger modal
-                                a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${term.Term_ID}`)
-                                    i.align-middle(data-feather="trash")
+        .row
+            .col-12
+                .card
+                    .card-body
+                        if terms && terms.length > 0
+                            .table-responsive
+                                table.table.table-striped
+                                    thead
+                                        tr
+                                            th ID
+                                            th Name
+                                            th Start Date
+                                            th End Date
+                                            th Actions
+                                    tbody
+                                        each term in terms
+                                            tr
+                                                td #{term.Term_ID}
+                                                td #{term.Name}
+                                                td #{term.Start_Date.toDateString()}
+                                                td #{term.End_Date.toDateString()}
+                                                td.table-action
+                                                    a(href=`/edit-term/${term.Term_ID}`)
+                                                        i.align-middle(data-feather="edit-2")
+                                                    // Trigger modal
+                                                    a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${term.Term_ID}`)
+                                                        i.align-middle(data-feather="trash")
 
-            // DELETE CONFIRMATION MODALS
-            each term in terms
-                .modal.fade(id=`deleteModal-${term.Term_ID}`, tabindex="-1", aria-labelledby="deleteModalLabel", aria-hidden="true")
-                    .modal-dialog.modal-dialog-centered
-                        .modal-content
-                            .modal-header
-                                h5.modal-title Delete Term?
-                                button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-                            .modal-body
-                                p This will permanently delete the term "#{term.Name}".
-                            .modal-footer
-                                button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
-                                form(action=`/delete-term/${term.Term_ID}`, method="POST")
-                                    button.btn.btn-danger(type="submit") Delete
-        else
-            .text-center.py-4
-                p.text-muted No terms found.
-                a.btn.btn-primary(href="/add-term")
-                    i.bi.bi-plus-circle
-                    |  Add First Term
+                                // DELETE CONFIRMATION MODALS
+                                each term in terms
+                                    .modal.fade(id=`deleteModal-${term.Term_ID}`, tabindex="-1", aria-labelledby="deleteModalLabel", aria-hidden="true")
+                                        .modal-dialog.modal-dialog-centered
+                                            .modal-content
+                                                .modal-header
+                                                    h5.modal-title Delete Term?
+                                                    button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+                                                .modal-body
+                                                    p This will permanently delete the term "#{term.Name}".
+                                                .modal-footer
+                                                    button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
+                                                    form(action=`/delete-term/${term.Term_ID}`, method="POST")
+                                                        button.btn.btn-danger(type="submit") Delete
+                        else
+                            .text-center.py-4
+                                p.text-muted No terms found.
+                                a.btn.btn-primary(href="/add-term")
+                                    i.bi.bi-plus-circle
+                                    |  Add First Term

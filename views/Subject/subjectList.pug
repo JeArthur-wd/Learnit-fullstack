@@ -8,12 +8,12 @@ block content
                 i.bi.bi-plus-circle
                 |  Add New Subject
         .row
-            .col-12.col-xl-12       
+            .col-12   
                 .card
                     .card-body
                         if subjects && subjects.length
                             table.table.table-striped
-                                thead.table-light
+                                thead
                                     tr
                                         th ID
                                         th Name
@@ -29,20 +29,20 @@ block content
                                                 a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${subject.Subject_ID}`)
                                                     i.align-middle(data-feather="trash")
 
-                                            // DELETE CONFIRMATION MODALS
-                                            each subject in subjects
-                                                .modal.fade(id=`deleteModal-${subject.Subject_ID}`, tabindex="-1", aria-labelledby="deleteModalLabel", aria-hidden="true")
-                                                    .modal-dialog.modal-dialog-centered
-                                                        .modal-content
-                                                            .modal-header
-                                                                h5.modal-title Delete Subject?
-                                                                button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
-                                                            .modal-body
-                                                                p This will permanently delete the subject "#{subject.Name}".
-                                                            .modal-footer
+                            // DELETE CONFIRMATION MODALS
+                            each subject in subjects
+                                .modal.fade(id=`deleteModal-${subject.Subject_ID}`, tabindex="-1", aria-labelledby="deleteModalLabel", aria-hidden="true")
+                                    .modal-dialog.modal-dialog-centered
+                                        .modal-content
+                                            .modal-header
+                                                h5.modal-title Delete Subject?
+                                                button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+                                            .modal-body
+                                                p This will permanently delete the subject "#{subject.Name}".
+                                            .modal-footer
                                                                 button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
                                                                 form(action=`/delete-subject/${subject.Subject_ID}`, method="POST")
-                                                                button.btn.btn-danger(type="submit") Delete
+                                                                    button.btn.btn-danger(type="submit") Delete
                         else
                             .text-center.py-4
                                 p.text-muted No subjects found.
