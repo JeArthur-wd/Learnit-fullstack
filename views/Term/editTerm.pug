@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+    .container-fluid.p-0
+        h1.h3.mb-3 Edit Term
+        .row
+            .col-12.col-xl-8
+                .card
+                    .card-body
+                        if term
+                            form(action=`/edit-term/${term.Term_ID}`, method="POST")
+                                .mb-3
+                                    label.form-label(for="Name") Name
+                                    input.form-control(
+                                        type="text",
+                                        name="Name",
+                                        value=term.Name
+                                    )
+
+                                .mb-3
+                                    label.form-label(for="Start_Date") Start Date
+                                    input.form-control(
+                                        type="date",
+                                        name="Start_Date",
+                                        value=term.Start_Date ? term.Start_Date.toISOString().split('T')[0] : ''
+                                    )
+
+                                .mb-3
+                                    label.form-label(for="End_Date") End Date
+                                    input.form-control(
+                                        type="date",
+                                        name="End_Date",
+                                        value=term.End_Date ? term.End_Date.toISOString().split('T')[0] : ''
+                                    )
+
+                                button.btn.btn-primary(type="submit") Update
+                        else
+                            .alert.alert-danger Term not found.
+                            a.btn.btn-secondary(href="/term-list") Back to Term List
