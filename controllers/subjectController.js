@@ -56,3 +56,67 @@ export const showSubjectList = async (req, res) => {
         res.redirect('/subject-list');
     }
 };
+
+export const showEditSubject = async (req, res) => {
+  try {
+    const subjectId = parseInt(req.params.id);
+
+    const subject = await prisma.subject.findUnique({
+      where: { Subject_ID: subjectId },
+    });
+
+    if (!subject) {
+      req.flash('error', 'Subject not found');
+      return res.redirect('/subject-list');
+    }
+
+    res.render('Subject/editSubject', { subject });
+  } catch (error) {
+    console.error(`Error loading subject edit form: ${error.message}`);
+    req.flash('error', 'Failed to load subject edit form');
+    res.redirect('/subject-list');
+  }
+};
+
+// Update subject
+export const updateSubject = async (req, res) => {
+  try {
+    const subjectId = parseInt(req.params.id);
+    const { Name } = req.body;
+
+    if (!Name) {
+      req.flash('error', 'Subject name is required');
+      return res.redirect(`/edit-subject/${subjectId}`);
+    }
+
+    await prisma.subject.update({
+      where: { Subject_ID: subjectId },
+      data: { Name },
+    });
+
+    req.flash('success', 'Subject updated successfully!');
+    return res.redirect('/subject-list');
+  } catch (error) {
+    console.error(`Error updating subject: ${error.message}`);
+    req.flash('error', 'An error occurred while updating the subject.');
+    return res.redirect(`/edit-subject/${req.params.id}`);
+  }
+};
+
+// Delete subject
+export const deleteSubject = async (req, res) => {
+  try {
+    const subjectId = parseInt(req.params.id);
+
+    await prisma.subject.delete({
+      where: { Subject_ID: subjectId },
+    });
+
+    req.flash("success", "Subject deleted successfully.");
+    return res.redirect("/subject-list");
+  } catch (error) {
+    console.error("Error deleting subject:", error.message);
+    req.flash("error", "Failed to delete subject.");
+    return res.redirect("/subject-list");
+  }
+};

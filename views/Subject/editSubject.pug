@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+    .container-fluid.p-0
+        h1.h3.mb-3 Edit Subject
+        .row
+            .col-12.col-xl-8
+                .card
+                    .card-body
+                        if subject
+                            form(action=`/edit-subject/${subject.Subject_ID}`, method="POST")
+                                .mb-3
+                                    label.form-label(for="Name") Subject Name
+                                    input.form-control(
+                                        type="text",
+                                        name="Name",
+                                        value=subject.Name,
+                                        required
+                                    )
+                                .d-flex.gap-2
+                                    button.btn.btn-primary(type="submit") Update Subject
+                                    a.btn.btn-secondary(href="/subject-list") Cancel
+                        else
+                            .alert.alert-danger Subject not found.
+                            a.btn.btn-secondary(href="/subject-list") Back to Subject List

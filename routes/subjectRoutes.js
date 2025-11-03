@@ -2,7 +2,10 @@ import express from 'express';
 import { 
     showAddSubject, 
     createSubject, 
-    showSubjectList 
+    showSubjectList,
+    showEditSubject,
+    updateSubject,
+    deleteSubject
 } from '../controllers/subjectController.js';
 import { checkAuth } from '../middleware/auth.js';
 
@@ -16,6 +19,9 @@ router.post('/add-subject', checkAuth, (req, res, next) => {
     next();
 }, createSubject);
 router.get('/subject-list', checkAuth, showSubjectList);
+router.get('/edit-subject/:id', checkAuth, showEditSubject);
+router.post('/edit-subject/:id', checkAuth, updateSubject);
+router.post('/delete-subject/:id', checkAuth, deleteSubject);
 
 export default router;
  
