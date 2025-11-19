@@ -5,6 +5,7 @@ import subjectRoutes from './subjectRoutes.js';
 import termRoutes from './termRoutes.js';
 import gradeRoutes from './gradeRoutes.js';
 import users from './users.js';
+import dashboardRoutes from './dashboardRoutes.js';
 
 const router = express.Router();
 
@@ -17,8 +18,7 @@ router.use('/', subjectRoutes);
 router.use('/', termRoutes);
 router.use('/', gradeRoutes);
 router.use('/', users);
-// router.use('/users', users);
-
+router.use('/', dashboardRoutes);
 
 // Dashboard route
 router.get('/dashboard', (req, res) => {

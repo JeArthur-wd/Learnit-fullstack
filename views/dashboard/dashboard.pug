@@ -1,11 +1,78 @@
 extends ../layout
 
 block content
-    h1 Welcome to Your Dashboard
-    if user
-        p Hello, #{user.FName} #{user.LName}!
-        p Email: #{user.Email}
-        p User ID: #{user.user_ID}
-    else
-        p You are not authenticated. Please <a href="/users/login">log in</a>.
-    a(href='/logout') Log Out
+  .container-fluid.p-3
+    h1.mb-4 Dashboard Overview
+    
+    //- Stats Cards
+    .row.mb-4
+      .col-md-4
+        .card.text-white.bg-primary
+          .card-body
+            h1.h2.text-white #{counts.students}
+            p Students
+      .col-md-4
+        .card.text-white.bg-success
+          .card-body
+            h1.h2.text-white #{counts.subjects}
+            p Subjects
+      .col-md-4
+        .card.text-white.bg-warning
+          .card-body
+            h1.h2.text-white #{counts.terms}
+            p Terms
+
+    //- Charts Section
+    .row
+      .col-md-6
+        .card
+          .card-header            
+          .card-body
+            #studentsChart(style="height: 300px;")
+      
+      .col-md-6
+        .card
+          .card-header            
+          .card-body
+            #subjectsChart(style="height: 300px;")
+
+                    block scripts
+                    script(src="https://code.highcharts.com/highcharts.js")
+                    script.
+                        // Students Chart 
+                        Highcharts.chart('studentsChart', {
+                        chart: { 
+                            type: 'column'
+                        },
+                        title: { 
+                            text: 'Students Distribution' 
+                        },
+                        xAxis: {
+                            categories: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.name)
+                        },
+                        yAxis: {
+                            title: { 
+                            text: 'Number of Students' 
+                            }
+                        },
+                        series: [{
+                            name: 'Students',
+                            data: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.y),
+                            color: '#007bff'
+                        }]
+                        });
+
+                        // Subjects Chart - SIMPLIFIED
+                        Highcharts.chart('subjectsChart', {
+                        chart: { 
+                            type: 'pie'
+                        },
+                        title: { 
+                            text: 'Subjects Overview' 
+                        },
+                        series: [{
+                            name: 'Subjects',
+                            colorByPoint: true,
+                            data: JSON.parse('!{chartData.subjects}')
+                        }]
+                        });

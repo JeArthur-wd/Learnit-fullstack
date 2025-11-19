@@ -92,13 +92,13 @@ export const updateStudent = async (req, res) => {
             return res.render('Student/editStudent', {
                 message: 'All fields are required.',
                 status: 'error',
-                student: { Student_ID: studentId, F_name, L_name, Class },
+                student: { Student_ID: studentId, F_name, L_name, Term, Class },
             });
         }
 
         await prisma.student.update({
             where: { Student_ID: studentId },
-            data: { F_name, L_name, Class },
+            data: { F_name, L_name, Term, Class },
         });
         req.flash('success', 'Student updated successfully!');
         res.redirect('/student-list');
