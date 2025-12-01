@@ -1,3 +1,99 @@
+//- extends ../layout
+
+//- block content
+//-   .container-fluid.p-3
+//-     h1.mb-4 Dashboard Overview
+    
+//-     //- Stats Cards
+//-     .row.mb-4
+//-       .col-md-4
+//-         .card.text-white.bg-primary
+//-           .card-body
+//-             h1.h2.text-white #{counts.students}
+//-             p Students
+//-       .col-md-4
+//-         .card.text-white.bg-success
+//-           .card-body
+//-             h1.h2.text-white #{counts.subjects}
+//-             p Subjects
+//-       .col-md-4
+//-         .card.text-white.bg-warning
+//-           .card-body
+//-             h1.h2.text-white #{counts.terms}
+//-             p Terms
+
+//-     //- Charts Section
+//-     .row
+//-       .col-md-6
+//-         .card
+//-           .card-header            
+//-           .card-body
+//-             #studentsChart(style="height: 300px;")
+      
+//-       .col-md-6
+//-         .card
+//-           .card-header            
+//-           .card-body
+//-             #subjectsChart(style="height: 300px;")
+
+//-                     block scripts
+//-                     script(src="https://code.highcharts.com/highcharts.js")
+//-                     script.
+//-                         // Students Chart 
+//-                         Highcharts.chart('studentsChart', {
+//-                         chart: { 
+//-                             type: 'column'
+//-                         },
+//-                         title: { 
+//-                             text: 'Students Distribution' 
+//-                         },
+//-                         xAxis: {
+//-                             categories: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.name)
+//-                         },
+//-                         yAxis: {
+//-                             title: { 
+//-                             text: 'Number of Students' 
+//-                             }
+//-                         },
+//-                         series: [{
+//-                             name: 'Students',
+//-                             data: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.y),
+//-                             color: '#007bff'
+//-                         }]
+//-                         });
+
+//-                         // Subjects Chart - SIMPLIFIED
+//-                         Highcharts.chart('subjectsChart', {
+//-                         chart: { 
+//-                             type: 'pie'
+//-                         },
+//-                         title: { 
+//-                             text: 'Subjects Overview' 
+//-                         },
+//-                         series: [{
+//-                             name: 'Subjects',
+//-                             colorByPoint: true,
+//-                             data: JSON.parse('!{chartData.subjects}')
+//-                         }]
+//-                         });
+//-                       //- grades Chart
+//-                            Highcharts.chart('gradesChart', {
+//-                         chart: { 
+//-                             type: 'area'
+//-                         },
+//-                         title: { 
+//-                             text: 'Grades Distribution' 
+//-                         },                       
+//-                         series: [{
+//-                             name: 'Grades',
+//-                             data: JSON.parse('!{chartData.gradesPerTerm}').map(item => item.y),
+//-                             color: '#007bff'
+//-                         }]
+//-                         });
+
+
+
+
 extends ../layout
 
 block content
@@ -22,57 +118,121 @@ block content
             h1.h2.text-white #{counts.terms}
             p Terms
 
-    //- Charts Section
+    //- First Row of Charts
     .row
       .col-md-6
         .card
-          .card-header            
+          .card-header
+            h5 Students Distribution
           .card-body
             #studentsChart(style="height: 300px;")
       
       .col-md-6
         .card
-          .card-header            
+          .card-header
+            h5 Subjects Overview
           .card-body
             #subjectsChart(style="height: 300px;")
 
-                    block scripts
-                    script(src="https://code.highcharts.com/highcharts.js")
-                    script.
-                        // Students Chart 
-                        Highcharts.chart('studentsChart', {
-                        chart: { 
-                            type: 'column'
-                        },
-                        title: { 
-                            text: 'Students Distribution' 
-                        },
-                        xAxis: {
-                            categories: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.name)
-                        },
-                        yAxis: {
-                            title: { 
-                            text: 'Number of Students' 
-                            }
-                        },
-                        series: [{
-                            name: 'Students',
-                            data: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.y),
-                            color: '#007bff'
-                        }]
-                        });
+    //- Second Row of Charts (Your New Charts)
+    .row.mt-4
+      .col-md-6
+        .card
+          .card-header
+            h5 Grades Distribution
+          .card-body
+            #gradesChart(style="height: 300px;")
+      
+      .col-md-6
+        .card
+          .card-header
+            h5 Student Progress
+          .card-body
+            #progressChart(style="height: 300px;")
 
-                        // Subjects Chart - SIMPLIFIED
-                        Highcharts.chart('subjectsChart', {
-                        chart: { 
-                            type: 'pie'
-                        },
-                        title: { 
-                            text: 'Subjects Overview' 
-                        },
-                        series: [{
-                            name: 'Subjects',
-                            colorByPoint: true,
-                            data: JSON.parse('!{chartData.subjects}')
-                        }]
-                        });
+                          block scripts
+                            script(src="https://code.highcharts.com/highcharts.js")
+                            script.
+                              // Students Chart 
+                              Highcharts.chart('studentsChart', {
+                                chart: { 
+                                  type: 'column'
+                                },
+                                title: { 
+                                  text: 'Students Distribution' 
+                                },
+                                xAxis: {
+                                  categories: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.name)
+                                },
+                                yAxis: {
+                                  title: { 
+                                    text: 'Number of Students' 
+                                  }
+                                },
+                                series: [{
+                                  name: 'Students',
+                                  data: JSON.parse('!{chartData.studentsPerTerm}').map(item => item.y),
+                                  color: '#007bff'
+                                }]
+                              });
+
+                              // Subjects Chart
+                              Highcharts.chart('subjectsChart', {
+                                chart: { 
+                                  type: 'pie'
+                                },
+                                title: { 
+                                  text: 'Subjects Overview' 
+                                },
+                                series: [{
+                                  name: 'Subjects',
+                                  colorByPoint: true,
+                                  data: JSON.parse('!{chartData.subjects}')
+                                }]
+                              });
+
+                              // Grades Chart - FIXED
+                              Highcharts.chart('gradesChart', {
+                                chart: { 
+                                  type: 'column'  // Changed from 'area' to 'column' for better comparison
+                                },
+                                title: { 
+                                  text: 'Grades Distribution' 
+                                },
+                                xAxis: {
+                                  categories: JSON.parse('!{chartData.gradesPerTerm}').map(item => item.name)
+                                },
+                                yAxis: {
+                                  title: { 
+                                    text: 'Number of Grades' 
+                                  }
+                                },
+                                series: [{
+                                  name: 'Grades',
+                                  data: [65, 72, 78, 75, 82],
+                                  color: '#28a745'
+                                }]
+                              });
+
+                              // Progress Chart (Example - you can customize this)
+                              Highcharts.chart('progressChart', {
+                                chart: { 
+                                  type: 'areaspline'
+                                },
+                                title: { 
+                                  text: 'Student Progress Over Time' 
+                                },
+                                xAxis: {
+                                  categories: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5']
+                                },
+                                yAxis: {
+                                  title: { 
+                                    text: 'Average Score' 
+                                  }
+                                },
+                                series: [{
+                                  name: 'Class Average',
+                                  data: [65, 72, 78, 75, 82],
+                                  color: '#ffc107'
+                                }]
+                              });

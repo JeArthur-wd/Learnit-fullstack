@@ -35,6 +35,16 @@ export const showDashboard = async (req, res) => {
         { name: 'English', y: 1 }
       );
     }
+    const gradesData = await prisma.grade.findMany();
+    console.log("Grades found:", gradesData.length);
+    
+    // Process grades data for chart (example - adjust based on your schema)
+    const gradesPerTerm = [
+      { name: 'A Grades', y: gradesData.filter(g => g.Grade_Value === 'A').length },
+      { name: 'B Grades', y: gradesData.filter(g => g.Grade_Value === 'B').length },
+      { name: 'C Grades', y: gradesData.filter(g => g.Grade_Value === 'C').length },
+      { name: 'Other', y: gradesData.filter(g => !['A','B','C'].includes(g.Grade_Value)).length }
+    ];
 
     res.render('Dashboard/dashboard', {
       counts: {
@@ -44,7 +54,9 @@ export const showDashboard = async (req, res) => {
       },
       chartData: {
         studentsPerTerm: JSON.stringify(studentsPerTerm),
-        subjects: JSON.stringify(subjectsChartData)
+        subjects: JSON.stringify(subjectsChartData),
+        gradesPerTerm: JSON.stringify(gradesPerTerm) 
+
       },
       currentUser: req.user
     });
@@ -69,3 +81,20 @@ export const showDashboard = async (req, res) => {
     });
   }
 };
+
+// In your dashboardController.js - add this to the try block
+
+// Update the res.render part:
+// res.render('Dashboard/dashboard', {
+//   counts: {
+//     students: studentCount,
+//     subjects: subjectCount,
+//     terms: termCount
+//   },
+//   chartData: {
+//     studentsPerTerm: JSON.stringify(studentsPerTerm),
+//     subjects: JSON.stringify(subjectsChartData),
+//     gradesPerTerm: JSON.stringify(gradesPerTerm) // ADD THIS LINE
+//   },
+//   currentUser: req.user
+// });
