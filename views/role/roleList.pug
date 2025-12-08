@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  .container.mt-5
+    h2.mb-3 Role List
+
+    a.btn.btn-primary.mb-3(href="/add-role") + Add Role
+
+    .card
+      .card-body
+        table.table.table-striped
+          thead
+            tr
+              th ID
+              th Role Name
+              th Permissions
+              th Actions
+          tbody
+            each role in roles
+              tr
+                td= role.Role_ID
+                td= role.Role_Name
+                td
+                  if role.Permissions.length === 0
+                    span.text-muted No permissions
+                  else
+                    ul
+                      each p in role.Permissions
+                        li= p
+                td
+                  form(action=`/delete-role/${role.Role_ID}` method="POST" onsubmit="return confirm('Delete this role?')")
+                    button.btn.btn-danger.btn-sm(type="submit") Delete

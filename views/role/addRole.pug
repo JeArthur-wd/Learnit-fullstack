@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  .container.mt-5
+    h2.mb-4 Add Role
+    .card.shadow-sm
+      .card-body
+
+        if messages.error
+          .alert.alert-danger= messages.error
+        if messages.success
+          .alert.alert-success= messages.success
+
+        form(action="/add-role" method="POST")
+          
+          .mb-3
+            label.form-label Role Name
+            input.form-control(type="text" name="Role_Name" required)
+
+          .mb-3
+            label.form-label Select Permissions
+            .row
+              each perm in permissionsList
+                .col-md-4
+                  .form-check
+                    input.form-check-input(type="checkbox" name="Permissions" value=perm)
+                    label.form-check-label= perm
+
+          button.btn.btn-primary(type="submit") Create Role
