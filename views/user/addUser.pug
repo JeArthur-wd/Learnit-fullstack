@@ -31,5 +31,13 @@ block content
             .mb-3
                 label.form-label Confirm Password
                 input.form-control(type="password" name="confirmPassword" required)
+
+            .mb-3
+                label.form-label(for="Role_ID") Select Role
+                select.form-control(name="Role_ID" required)
+                    option(value="") Select role
+                    each role in roles
+                        option(value=role.Role_ID) #{role.Role_Name}
+                    
             
             button.btn.btn-primary(type="submit") Create User

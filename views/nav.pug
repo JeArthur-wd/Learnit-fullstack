@@ -68,6 +68,15 @@ nav#sidebar.sidebar.js-sidebar
             a.sidebar-link(href="/add-user") Add User
           li.sidebar-item
             a.sidebar-link(href="/user-list") Show Users
+      li.sidebar-item
+        a.sidebar-link.collapsed(data-bs-target="#datatable" data-bs-toggle="collapse")
+          i.align-middle(data-feather="list")
+          span.align-middle Roles
+        ul#datatable.sidebar-dropdown.list-unstyled.collapse(data-bs-parent="#sidebar")
+          li.sidebar-item
+            a.sidebar-link(href="/add-role") Permissions
+          li.sidebar-item
+            a.sidebar-link(href="/role-list") Show Roles
 
     .sidebar-cta
       .sidebar-cta-content

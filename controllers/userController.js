@@ -1,17 +1,17 @@
 import { prisma } from '../utilities/prisma.js';
 import bcrypt from 'bcrypt';
 
-export const showAddUser = (req, res) => {
-  res.render('User/addUser');
-}
+export const showAddUser = async (req, res) => {
+  const roles = await prisma.roles.findMany();
+  res.render('User/addUser', { roles });
+};
 
 export const CreateUser = async (req, res) => {
   try {
-    const { FName, LName, email, password, confirmPassword } = req.body;
+    const { FName, LName, email, password, confirmPassword, Role_ID } = req.body;
 
-    // Simple validation
-    if (!FName || !LName || !email || !password || !confirmPassword) {
-      req.flash('error', 'All fields are required');
+    if (!FName || !LName || !email || !password || !confirmPassword || !Role_ID) {
+      req.flash('error', 'All fields including Role are required');
       return res.redirect('/add-user');
     }
 
@@ -20,7 +20,6 @@ export const CreateUser = async (req, res) => {
       return res.redirect('/add-user');
     }
 
-    // Check if user exists
     const existingUser = await prisma.user.findUnique({
       where: { Email: email }
     });
@@ -30,14 +29,15 @@ export const CreateUser = async (req, res) => {
       return res.redirect('/add-user');
     }
 
-    // Create user
     const hashedPassword = await bcrypt.hash(password, 10);
+
     await prisma.user.create({
       data: {
-        FName: FName,
-        LName: LName,
+        FName,
+        LName,
         Email: email,
-        Password: hashedPassword
+        Password: hashedPassword,
+        Role_ID: parseInt(Role_ID)
       },
     });
 
@@ -50,6 +50,7 @@ export const CreateUser = async (req, res) => {
     res.redirect('/add-user');
   }
 };
+
 
 export const showUserList = async (req, res) => {
   try {
@@ -76,8 +77,9 @@ export const showEditUser = async (req, res) => {
       req.flash('error', 'User not found');
       return res.redirect('/user-list');
     }
+const roles = await prisma.roles.findMany();
 
-    res.render('User/editUser', { user });
+res.render('User/editUser', { user, roles });
   } catch (error) {
     console.error(`Error loading user edit form: ${error.message}`);
     req.flash('error', 'Failed to load user edit form');
@@ -87,27 +89,27 @@ export const showEditUser = async (req, res) => {
 
 export const UpdateUser = async (req, res) => {
   try {
-    const userId = parseInt(req.params.id);
-    const { FName, LName, Email } = req.body;
-
-    if (!FName || !LName || !Email) {
-      req.flash('error', 'All fields are required');
-      return res.redirect(`/edit-user/${userId}`);
-    }
+    const id = parseInt(req.params.id);
+    const { FName, LName, Email, Role_ID } = req.body;
 
     await prisma.user.update({
-      where: { user_ID: userId },
-      data: { FName, LName, Email },
-    });
+  where: { user_ID: id },
+  data: {
+    FName,
+    LName,
+    Email,
+    Role_ID: parseInt(Role_ID)
+  }
+});
 
-    req.flash('success', 'User updated successfully!');
-    res.redirect('/user-list');
-  } catch (error) {
-    console.error(`Error updating user: ${error.message}`);
-    req.flash('error', 'An error occurred while updating the user.');
-    res.redirect(`/edit-user/${req.params.id}`);
+    req.flash("success", "User updated successfully!");
+    res.redirect("/user-list");
+  } catch (err) {
+    req.flash("error", "Failed to update user.");
+    res.redirect("/user-list");
   }
 };
+
 
 export const deleteUser = async (req, res) => {
   try {

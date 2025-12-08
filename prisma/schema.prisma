@@ -49,4 +49,22 @@ model user {
   Email        String   @db.VarChar(50)    @unique
   Password     String   @db.VarChar(200)
   CreationDate DateTime @default(now()) @db.Timestamp(0)
+
+   // Role relation
+  role Roles? @relation(fields: [Role_ID], references: [Role_ID])
+  Role_ID Int?
+
+  Created_At DateTime @default(now())
+  Updated_At DateTime @updatedAt
+}
+
+model Roles {
+  Role_ID     Int      @id @default(autoincrement())
+  User_ID     Int?
+  Role_Name   String
+  Permissions Json     @default("[]")
+  Created_At  DateTime @default(now())
+  Updated_At  DateTime @updatedAt
+
+  @@map("roles")
 }

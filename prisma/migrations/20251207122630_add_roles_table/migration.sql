@@ -1,0 +1,11 @@
+-- CreateTable
+CREATE TABLE `roles` (
+    `Role_ID` INTEGER NOT NULL AUTO_INCREMENT,
+    `User_ID` INTEGER NULL,
+    `Role_Name` VARCHAR(191) NOT NULL,
+    `Permissions` JSON NOT NULL,
+    `Created_At` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `Updated_At` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`Role_ID`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

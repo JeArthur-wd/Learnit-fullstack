@@ -12,19 +12,33 @@ block content
                                 label.form-label First Name
                                 input.form-control(
                                     type="text" 
-                                    name='FName'
-                                    value=user.FName)
+                                    name="FName"
+                                    value=user.FName
+                                )
+
                             .mb-3
                                 label.form-label Last Name
                                 input.form-control(
                                     type="text" 
-                                    name='LName'
-                                    value=user.LName)
+                                    name="LName"
+                                    value=user.LName
+                                )
+
                             .mb-3
                                 label.form-label Email
                                 input.form-control(
-                                    type="text" 
-                                    name='Email'
-                                    value=user.Email)
+                                    type="email" 
+                                    name="Email"
+                                    value=user.Email
+                                )
+
                             .mb-3
+                                label.form-label(for="Role_ID") Select Role
+                                select.form-select(name="Role_ID" required)
+                                    each role in roles
+                                        option(
+                                            value=role.Role_ID
+                                            selected=(role.Role_ID === user.Role_ID)
+                                        ) #{role.Role_Name}
+
                             button.btn.btn-primary(type="submit") Update

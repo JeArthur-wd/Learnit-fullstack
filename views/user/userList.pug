@@ -22,6 +22,7 @@ block content
                                             th Last Name
                                             th Email
                                             th Join Date
+                                            th Role
                                             th Actions
                                     tbody
                                         each user in users
@@ -31,6 +32,7 @@ block content
                                                 td #{user.LName}
                                                 td #{user.Email}
                                                 td #{new Date(user.CreationDate).toLocaleDateString()}
+                                                td #{user.Role}
                                                 td.table-action
                                                     a(href=`/edit-user/${user.user_ID}`)
                                                         i.align-middle(data-feather="edit-2")
@@ -52,6 +54,12 @@ block content
                                                                     button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel
                                                                     form(action=`/delete-user/${user.user_ID}` method="POST")
                                                                         button.btn.btn-danger(type="submit") Delete
+                                                                if user.Role === "admin"
+                                                                    a(href=`/edit-user/${user.user_ID}`)
+                                                                        i(data-feather="edit-2")
+                                                                    a(href="#", data-bs-toggle="modal", data-bs-target=`#deleteModal-${user.user_ID}`)
+                                                                        i(data-feather="trash")
+                                                                            
                         else
                             .text-center.py-4
                                 p.text-muted No users found.
